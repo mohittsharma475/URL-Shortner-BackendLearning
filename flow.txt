@@ -5,3 +5,12 @@ post / -----  return the shortID
 get /:id  ---  redirect to url
 
 get  ----/analysis/:shortid - return no of clicked 
+
+
+
+template ENgines
+
+EJS
+PUg JS
+Handlebars 
+perform server side rendering

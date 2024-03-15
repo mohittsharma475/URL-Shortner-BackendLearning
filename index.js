@@ -2,6 +2,7 @@ const express = require("express");
 const { connectToDb } = require("./connectToDb");
 const { createRequestLog } = require("./middleware/createRequestLog");
 const { router } = require("./routes/urlRouter");
+const { urlModel } = require("./models/urlModel");
 
 connectToDb("mongodb://127.0.0.1:27017/URL")
   .then(() => {
@@ -22,8 +23,22 @@ function startServer() {
   app.use(express.json());
 
   //routes
-  app.get("/test", (req, res) => {
-    return res.send("<h1>Hey you are in Test Environment</h1>");
+  app.get("/test", async (req, res) => {
+    const allURLs = await urlModel.find({});
+    console.log(allURLs);
+    return res.send(`
+    <html>
+      <head></head>
+      <body>
+        <ol>
+          ${allURLs
+            .map((url) => {
+              return `<li>${url.shortId}-${url.redirectUrl}-${url.visitHistory.length}</li>`;
+            })
+            .join("")}
+        </ol>
+      </body>
+    </html>`);
   });
   app.use("/url", router);
 
