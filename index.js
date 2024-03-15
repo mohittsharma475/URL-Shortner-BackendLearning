@@ -22,6 +22,9 @@ function startServer() {
   app.use(express.json());
 
   //routes
+  app.get("/test", (req, res) => {
+    return res.send("<h1>Hey you are in Test Environment</h1>");
+  });
   app.use("/url", router);
 
   app.listen(port, () => {
