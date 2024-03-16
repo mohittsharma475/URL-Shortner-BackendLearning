@@ -1,8 +1,15 @@
 const express = require("express");
 const { connectToDb } = require("./connectToDb");
 const { createRequestLog } = require("./middleware/createRequestLog");
+<<<<<<< Updated upstream
 const { router } = require("./routes/urlRouter");
 const { urlModel } = require("./models/urlModel");
+=======
+const urlRouter  = require("./routes/urlRouter");
+// const { urlModel } = require("./models/urlModel");
+const path = require("path");
+const staticRouter = require("./routes/staticRoute");
+>>>>>>> Stashed changes
 
 connectToDb("mongodb://127.0.0.1:27017/URL")
   .then(() => {
@@ -21,6 +28,7 @@ function startServer() {
   app.use(createRequestLog("log.txt"));
   // middleware to parse bodies
   app.use(express.json());
+<<<<<<< Updated upstream
 
   //routes
   app.get("/test", async (req, res) => {
@@ -41,6 +49,24 @@ function startServer() {
     </html>`);
   });
   app.use("/url", router);
+=======
+  app.use(express.urlencoded({extended:false}));
+ 
+  app.use("/", staticRouter);
+  
+  app.use("/url", urlRouter);
+
+
+
+  // //routes
+  // app.get("/test", async (req, res) => {
+  //   const allURLs = await urlModel.find({});
+  //   return res.render("home",{urls:allURLs});
+  // });
+
+ 
+  
+>>>>>>> Stashed changes
 
   app.listen(port, () => {
     console.log(`server started at port: ${port}`);

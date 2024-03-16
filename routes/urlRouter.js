@@ -14,4 +14,4 @@ router.route("/:shortId").get(handleGetUrlByShortId);
 
 router.route("/anlaysis/:shortId").get(handleAnalysis);
 
-module.exports = { router };
+module.exports = router ;

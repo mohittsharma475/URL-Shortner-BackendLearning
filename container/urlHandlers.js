@@ -14,7 +14,10 @@ async function handleCreateUrlShortID(req, res) {
       redirectUrl: req.body.url,
       visitHistory: [],
     });
-    return res.json({ shortId });
+    return res.render('home',{
+      id:shortId
+    })
+    // return res.json({ shortId });
   } catch (err) {
     return res.status(500).json({ error: "Internal Server error" });
   }
