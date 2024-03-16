@@ -6,6 +6,7 @@ const urlRouter = require("./routes/urlRouter");
 // const { urlModel } = require("./models/urlModel");
 const path = require("path");
 const staticRouter = require("./routes/staticRoute");
+const userRoute =  require("./routes/userRoute");
 
 connectToDb("mongodb://127.0.0.1:27017/URL")
   .then(() => {
@@ -23,14 +24,12 @@ function startServer() {
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, 'views'));
 
-  // middleware to log requests
   app.use(createRequestLog("log.txt"));
-  // middleware to parse bodies
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
   app.use("/", staticRouter);
-
+  app.use("/user",userRoute);
   app.use("/url", urlRouter);
 
   app.listen(port, () => {
