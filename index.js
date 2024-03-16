@@ -2,13 +2,19 @@ const express = require("express");
 const { connectToDb } = require("./connectToDb");
 const { createRequestLog } = require("./middleware/createRequestLog");
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 const { router } = require("./routes/urlRouter");
 const { urlModel } = require("./models/urlModel");
 =======
+=======
+>>>>>>> Stashed changes
 const urlRouter  = require("./routes/urlRouter");
 // const { urlModel } = require("./models/urlModel");
 const path = require("path");
 const staticRouter = require("./routes/staticRoute");
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 connectToDb("mongodb://127.0.0.1:27017/URL")
@@ -28,6 +34,7 @@ function startServer() {
   app.use(createRequestLog("log.txt"));
   // middleware to parse bodies
   app.use(express.json());
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
   //routes
@@ -50,6 +57,8 @@ function startServer() {
   });
   app.use("/url", router);
 =======
+=======
+>>>>>>> Stashed changes
   app.use(express.urlencoded({extended:false}));
  
   app.use("/", staticRouter);
