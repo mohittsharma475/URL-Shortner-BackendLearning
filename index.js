@@ -7,6 +7,9 @@ const urlRouter = require("./routes/urlRouter");
 const path = require("path");
 const staticRouter = require("./routes/staticRoute");
 const userRoute =  require("./routes/userRoute");
+const cookieParser =  require("cookie-parser")
+
+const {restrictTologgedInUserOnly,checkAuth} =  require("./middleware/authencation")
 
 connectToDb("mongodb://127.0.0.1:27017/URL")
   .then(() => {
@@ -25,12 +28,14 @@ function startServer() {
   app.set('views', path.join(__dirname, 'views'));
 
   app.use(createRequestLog("log.txt"));
+  app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-
-  app.use("/", staticRouter);
+  
+  
+  app.use("/url",restrictTologgedInUserOnly,urlRouter);
   app.use("/user",userRoute);
-  app.use("/url", urlRouter);
+  app.use("/",checkAuth, staticRouter);
 
   app.listen(port, () => {
     console.log(`server started at port: ${port}`);
