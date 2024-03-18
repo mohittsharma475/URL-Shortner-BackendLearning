@@ -9,7 +9,7 @@ const staticRouter = require("./routes/staticRoute");
 const userRoute =  require("./routes/userRoute");
 const cookieParser =  require("cookie-parser")
 
-const {restrictTologgedInUserOnly,checkAuth} =  require("./middleware/authencation")
+const {restrictTologgedInUserOnly,checkAuth, restrictTo, checkForAuthentication} =  require("./middleware/authencation")
 
 connectToDb("mongodb://127.0.0.1:27017/URL")
   .then(() => {
@@ -31,9 +31,12 @@ function startServer() {
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
+  app.use(checkForAuthentication());
   
   
-  app.use("/url",restrictTologgedInUserOnly,urlRouter);
+  app.use("/url",restrictTo(["Normal"]),urlRouter);
+  // app.use("/url",restirctLoggin,urlRouter);
+
   app.use("/user",userRoute);
   app.use("/",checkAuth, staticRouter);
 

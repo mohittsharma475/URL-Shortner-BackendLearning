@@ -1,9 +1,10 @@
 const express = require("express");
 const { urlModel } = require("../models/urlModel");
+const { restrictTo } = require("../middleware/authencation");
 
 const staticRouter = express.Router();
 
-staticRouter.get("/", async (req, res) => {
+staticRouter.get("/",restrictTo(["Normal"]) ,async (req, res) => {
 
   if(!req.user) return res.redirect("/login");
   const allURL = await urlModel.find({createdBy:req.user._id});
